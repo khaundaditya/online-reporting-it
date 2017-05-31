@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Create an account{% endblock %}
+
+{% block content %}
+    <h1>Create an account</h1>
+    <p>Please, sign up using the following form:</p>
+    <form action="." method="post">
+<!-- 	 {{ user_form.as_table }}  -->
+        <table>
+	        <tr>
+	        	<td align='right'>User Name: </td><td>{{user_form.username}}</td>
+
+	        </tr>
+	        <tr>
+	        	<td></td><td> <font face="Cambria"> <i>{{user_form.username.help_text}}<i></td>	
+	        </tr>
+
+	        <tr>
+	        	<td align='right'>First Name: </td><td>{{user_form.first_name}}</td>
+	        </tr>
+
+	        <tr>
+	       		 <td align='right'>Email ID: </td><td>{{user_form.email}}</td>
+	        </tr>
+	        <tr>
+	        	<td align='right'>Password: </td><td>{{user_form.password}}</td>
+	        </tr>
+	        <tr>
+	        	<td align='right'>Repeat Password: </td><td>{{user_form.password2}}</td>
+	        </tr>
+        </table>
+        {% csrf_token %}
+        <p><input type="submit" value="Create my account"></p>
+    </form>
+{% endblock %}

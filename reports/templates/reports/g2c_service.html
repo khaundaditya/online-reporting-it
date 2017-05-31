@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}G2C Service Report{% endblock %}
+
+{% block extrahead %}
+
+<script type="text/javascript">
+    $(function() {
+        $('#id_contact_info_table tbody tr').formset({
+            extraClasses: ['row1', 'row2', 'row3']
+        })
+    })
+</script>
+
+<!-- Here's an example of how you can style add/delete buttons with CSS -->
+<!-- style type="text/css">
+    .add-row {
+        padding-left:18px;
+        background:url({{STATIC_URL}}/images/add.png) no-repeat left center;
+    }
+    .delete-row {
+        float:right;
+        display:block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url({{STATIC_URL}}/images/delete.png) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+    tr.row1 td { background-color: #f9f9f9; }
+    tr.row2 td { background-color: #f3f3f3; }
+    tr.row3 td { background-color: #ededed; }
+</style> -->
+{% endblock %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li class="{{ message.tags }}">
+{{ message|safe }}
+<a href="#" class="close"></a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% block content %}
+<div>
+    <div class="entry">
+        <form method="post" action="">{% csrf_token %}
+       
+        {% if new %}
+            <h3 align='center'><strong><u>G2C Service Report </strong></u><br><br></h3>
+             {% for form in formset.forms %}
+                    {% if forloop.first %}
+
+                     <strong>District: </strong>{{ form.district }}<br><br>
+
+                   {% endif %}
+                                            
+                 {% endfor %}
+         {% endif %}
+
+       <!--  {{ formset.non_form_errors }} -->
+
+            <table id="id_contact_info_table" border="2" cellpadding="0" cellspacing="1">
+                <thead>
+                    <tr>
+                        <th scope="col">Service Name</th>
+                        <th scope="col">Delivery Channel</th>
+                        <th scope="col">Name of Online Application</th>
+                        <th scope="col">Digital Signature</th>
+                        <th scope="col">Is Work Flow Computerized?</th>
+                        <th scope="col">Language</th>
+                        <th scope="col">Is Legacy Data Digitized</th>
+                        <th scope="col">If Yes,From When</th>
+                        <th scope="col">Where is digitized data stored?</th>
+                        <th scope="col">Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset.forms %}
+                    {% if update %}
+                          {{form.id}}
+                      {% endif %}
+                    <tr id="{{ form.prefix }}-row">
+                       <!--  <td style="text-align:center;">{{ form.preferred }}</td> -->
+                        <td >{{ form.service_nm }}</td>
+                        <td> {{ form.delivery_channel }}</td>
+                        <td> {{ form.name_of_application }}</td>
+                        <td> {{ form.is_digitally_signed }}</td>
+                        <td> {{ form.is_computerized }}</td>
+                        <td> {{ form.language_of_submission }}</td>
+                        <td> {{ form.is_legacy_data_digitized }}</td>
+                        <td> {{ form.from_when }}</td>
+                        <td> {{ form.mode_of_storage }}</td>
+                        <td> {{ form.remarks }}</td>
+ 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <p>
+               {% if new %}
+                 {{ formset.management_form }}
+                    <input type="submit" value="Submit" id="submitid" />
+                    {% endif %}
+
+                 {% if update %}
+                      {{ formset.management_form }}
+                    <input type="submit" value="Update" name="updateid" />
+                {% endif %} 
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

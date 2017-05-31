@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% if override %}
+    {% block inheritable %}
+    {% endblock %}
+{% endif %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<html>
+<h2 align=center> <strong>{{ report_name }} Report </strong></h2>
+<body>
+{% if include_href %}
+ <table>
+    <tr>
+    <td><a target="_blank" href="{% url 'reviewer:generate_pdf' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export PDF</a>
+    </td><td><a target="_blank" href="{% url 'reviewer:generate_XLS' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLS</a></td>
+    <td><a target="_blank" href="{% url 'reviewer:generate_XLSX' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLSX</a></td>
+    </tr>
+</table>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li class="{{ message.tags }}">
+{{ message|safe }}
+<a href="#" class="close"></a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+<table border=2>
+{% if csrf %}
+{% csrf_token %}
+{% endif %}
+	<h3> District: <strong>{{ district_full_name }}</strong> </h3>
+	<h3> Report Month: <strong>{{ YYYYMM }}</strong> </h3>
+    <tr>
+                       <th scope="col">Name of GP</th>
+                        <th scope="col">Block Name</th>
+                        <th scope="col">Whether Fiber layed upto GP</th>
+                        <th scope="col">GPON aggregration equipment installed at Block?</th>
+                        <th scope="col">Is GPON termination done at GP?</th>
+                        <th scope="col">NOFN PoP is Build at</th>
+                        <th scope="col">Access to Network Facility extendible upto village?</th>
+                        <th scope="col">Remarks</th>
+    {% for item in filtered_result %}
+    <tr> 
+                        <td >{{ item.gp_name }}</td>
+                        <td>{{ item.block_name }}</td>
+
+                        <td> {{ item.is_fibre_layered_upto_gp }}</td>
+                        <td> {{ item.is_gpon_installed_at_block }}</td>
+                        <td> {{ item.is_gpon_termination_done_at_GP }}</td>
+                        <td> {{ item.nofn_pop_build_at }}</td>
+                        <td> {{ item.is_network_access_available_at_village }}</td>
+                        <td> {{ item.remarks }}</td>
+    </tr>
+    {% endfor %}
+</table>
+ <form method="post" action="">
+ {% if include_href %}
+ <a target="_blank" href="{% url 'reviewer:reviewer_comment' %}?report={{report_name}}&today={{YYYYMM}}&district={{district}}">
+ Comment</a> 
+ {% endif %}
+</form>
+</body>
+</html>
+{% endblock %}

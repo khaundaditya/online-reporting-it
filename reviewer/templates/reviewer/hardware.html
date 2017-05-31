@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% if override %}
+    {% block inheritable %}
+    {% endblock %}
+{% endif %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<html>
+<h2 align=center> <strong>{{ report_name }} Report </strong></h2>
+<body>
+{% if include_href %}
+ <table>
+    <tr>
+    <td><a target="_blank" href="{% url 'reviewer:generate_pdf' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export PDF</a>
+    </td><td><a target="_blank" href="{% url 'reviewer:generate_XLS' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLS</a></td>
+    <td><a target="_blank" href="{% url 'reviewer:generate_XLSX' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLSX</a></td>
+    </tr>
+</table>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li class="{{ message.tags }}">
+{{ message|safe }}
+<a href="#" class="close"></a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+<table border=2>
+{% if csrf %}
+{% csrf_token %}
+{% endif %}
+	<h3> District: <strong>{{ district_full_name }}</strong> </h3>
+	<h3> Report Month: <strong>{{ YYYYMM }}</strong> </h3>
+    <tr>
+        <th scope="col">Name of Hardware</th>
+        <th scope="col">Quantity/No</th>
+        <th scope="col">Current Status</th>
+        <th scope="col">Number of Hardware Used and In stock</th>
+        <th scope="col">Is AMC Available?</th>
+        <th scope="col">Remarks</th>
+    </tr>
+    {% for item in filtered_result %}
+    <tr> 
+        <td> {{ item.hardware_nm }}</td>
+        <td> {{ item.quantity }}</td>
+        <td> {{ item.status }}</td>
+        <td> {{ item.hw_in_stock }}</td>
+        <td> {{ item.is_amc_avaialable }}</td>
+        <td> {{ item.remarks }}</td>
+        </tr>
+    {% endfor %}
+</table>
+ <form method="post" action="">
+ {% if include_href %}
+ <a target="_blank" href="{% url 'reviewer:reviewer_comment' %}?report={{report_name}}&today={{YYYYMM}}&district={{district}}">
+ Comment</a> 
+ {% endif %}
+</form>
+</body>
+</html>
+{% endblock %}

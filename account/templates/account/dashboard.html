@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<p>Welcome to your dashboard.</p>
+<!-- <p>Please check the messages associated with you<p> -->
+<!-- <a target="_blank" href="{% url 'reviewer:populate_comment' %}?status={{status}}&user={{user}}&group={{group}}">Comments </a> -->
+<!-- <a target="_blank" href="{% url 'messages:messages_inbox' %}">Inbox</a> -->
+<div class="entry">
+
+        {% if group == "Applicant" %}
+
+        	 	
+
+	        <table border="2" cellpadding="0" cellspacing="1">
+	        	<thead>
+	        	<tr>
+	        		<th>Submit New Report</th>
+	        		<TH>Edit Submitted Reports</TH>
+	        	</tr>
+	        	</thead>
+	        	<tr>
+		        			  <td>
+				
+				        <ul>
+				            <li><a href="{% url 'reports:generate_report' reportname='Manpower' %}">Manpower Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='CSC' %}">CSC Report</a></li>
+				            <li><a href="{% url 'reports:generate_report' reportname='Hardware' %}">Hardware Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='Software' %}">Software Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='NOFN' %}">NOFN Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='DL' %}">Digital Literacy Report</a></li>
+				            <li><a href="{% url 'reports:generate_report' reportname='g2cService' %}">G2C Service Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='ServiceTrans' %}">e-District Transaction Report</a></li>
+				          	<li><a href="{% url 'reports:generate_report' reportname='SWAN' %}">SWAN Report</a></li>
+				        </ul> 
+				  </td>
+		    			
+
+				<td>
+				
+				        <ul>
+				            <li><a href="{% url 'reports:edit_report' reportname='Manpower' %}">Manpower Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='CSC' %}">CSC Report</a></li>
+				            <li><a href="{% url 'reports:edit_report' reportname='Hardware' %}">Hardware Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='Software' %}">Software Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='NOFN' %}">NOFN Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='DL' %}">Digital Literacy Report</a></li>
+				            <li><a href="{% url 'reports:edit_report' reportname='g2cService' %}">G2C Service Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='ServiceTrans' %}">e-District Transaction Report</a></li>
+				          	<li><a href="{% url 'reports:edit_report' reportname='SWAN' %}">SWAN Report</a></li>
+				        </ul> 
+				  </td>
+			
+		   		 </tr>
+	        	</table>
+	     {% endif %}
+	     {% if group == "Reviewer" %}
+	        <ul>
+	            <li><a href="{% url 'reviewer:generate_report' %}">Generate Report</a></li>
+	             <li><a href="{% url 'reviewer:analyze_report' %}">Analyze Report</a></li>
+	            
+	        </ul>
+	     {% endif %}
+	     {%if group == "Administrators" %}
+	     		<ul>
+	       	     	<li><a href="{% url 'reports:delete_report' %}">Delete Report</a></li>
+
+	            
+	        	</ul>
+	     {% endif %}
+    </div>
+{% endblock %}

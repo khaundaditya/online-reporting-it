@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Activity Logs" %}</h1>
+{% if log_list %}
+<table class="messages" border=1>
+    <thead>
+        <tr><th>{% trans "Applicant" %}</th><th>{% trans "Report Name" %}</th><th>{% trans "District" %}</th><th>{% trans "Action" %}</th><th>{% trans "Last Activity Timestamp" %}</th></tr>
+    </thead>
+    <tbody>
+{% for log_entry in log_list %}
+    <tr>
+        <td>{{ log_entry.user }}</td>
+        <td>{{log_entry.report_name}}</td>
+        <td>{{log_entry.district}}</td>
+        <td>{{log_entry.message}}
+        <td>{{log_entry.submitted_time}}</td>
+        
+
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>{% trans "No  Activity So Far." %}</p>
+{% endif %}
+{% endblock %}

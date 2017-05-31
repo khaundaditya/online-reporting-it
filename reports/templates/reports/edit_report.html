@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Edit Report{% endblock %}
+
+{% block content %}
+<h1>Edit Report</h1>
+<form role="form" action="" method="post">
+    {% csrf_token %}
+    <table>
+    <tr>
+    	<td headers="District">{{form.district}}</td>
+    	<td headers="Report Month">{{form.YYYYMM}}</td>
+    <tr>
+    </table>
+
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

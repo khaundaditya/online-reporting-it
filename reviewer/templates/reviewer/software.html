@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% if override %}
+    {% block inheritable %}
+    {% endblock %}
+{% endif %}
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<html>
+<h2 align=center> <strong>{{ report_name }} Report </strong></h2>
+<body>
+{% if include_href %}
+ <table>
+    <tr>
+    <td><a target="_blank" href="{% url 'reviewer:generate_pdf' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export PDF</a>
+    </td><td><a target="_blank" href="{% url 'reviewer:generate_XLS' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLS</a></td>
+    <td><a target="_blank" href="{% url 'reviewer:generate_XLSX' %}?period={{YYYYMM}}&district={{district}}&report={{report_name}}">Export XLSX</a></td>
+    </tr>
+</table>
+{% endif %}
+{% if messages %}
+<ul class="messages">
+{% for message in messages %}
+<li class="{{ message.tags }}">
+{{ message|safe }}
+<a href="#" class="close"></a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+<table border=2>
+{% if csrf %}
+{% csrf_token %}
+{% endif %}
+	<h3> District: <strong>{{ district_full_name }}</strong> </h3>
+	<h3> Report Month: <strong>{{ YYYYMM }}</strong> </h3>
+    <tr>
+        <th scope="col">Name of the application</th>
+                        <th scope="col">Application Owner</th>
+                        <th scope="col">Appication Objective</th>
+                        <th scope="col">Stakeholder Details</th>
+                        <th scope="col">Date of Installation/Commisioing</th>
+                        <th scope="col">Name of Application Developer</th>
+                        <th scope="col">Application Platform</th>
+                        <th scope="col">Future Roadmap</th>
+                        <th scope="col">Support Requirement</th>
+    </tr>
+    {% for item in filtered_result %}
+    <tr> 
+        <td>{{ item.appl_nm }}</td>
+        <td> {{ item.appl_owner }}</td>
+        <td> {{ item.appl_objective }}</td>
+        <td> {{ item.stakeholder_details }}</td>
+        <td> {{ item.date_of_commisioning }}</td>
+        <td> {{ item.name_of_application_developer }}</td>
+        <td> {{ item.appl_platform_details }}</td>
+        <td> {{ item.future_roadmap }}</td>
+        <td> {{ item.support_requirements }}</td>
+    </tr>
+    {% endfor %}
+</table>
+ <form method="post" action="">
+ {% if include_href %}
+ <a target="_blank" href="{% url 'reviewer:reviewer_comment' %}?report={{report_name}}&today={{YYYYMM}}&district={{district}}">
+ Comment</a> 
+ {% endif %}
+</form>
+</body>
+</html>
+{% endblock %}

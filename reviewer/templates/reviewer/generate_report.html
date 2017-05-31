@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Generate Report{% endblock %}
+
+{% block content %}
+<h1>Generate Report</h1>
+<form role="form" action="" method="post">
+    {% csrf_token %}
+        <table>
+    <tr>
+    	<td align='right'>District: </td><td>{{form.district}}</td>
+    </tr>
+    <tr>
+    	<td>Report Name: </td><td>{{form.report_name}}</td>
+    </tr>
+    <tr>
+    	<td>Report Month: </td><td>{{form.YYYYMM}}</td>
+    </tr>
+    </table>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

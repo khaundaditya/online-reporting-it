@@ -1,0 +1,89 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+ <html>
+     <head>
+         <title>Title</title>
+         <style type="text/css">
+             body {
+                 font-weight: 200;
+                 font-size: 14px;
+             }
+             .header {
+                 font-size: 20px;
+                 font-weight: 100;
+                 text-align: center;
+                 color: #007cae;
+             }
+             .title {
+                 font-size: 22px;
+                 font-weight: 100;
+                /* text-align: right;*/
+                padding: 10px 20px 0px 20px;  
+             }
+             .title span {
+                 color: #007cae;
+             }
+             .details {
+                 padding: 10px 20px 0px 20px;
+                 text-align: left !important;
+                 /*margin-left: 40%;*/
+             }
+             .hrItem {
+                 border: none;
+                 height: 1px;
+                 /* Set the hr color */
+                 color: #333; /* old IE */
+                 background-color: #fff; /* Modern Browsers */
+             }
+             .table,th,td,tr {
+                border: 1px solid black;
+                background-color:#FCF0FB;
+                text-align: center;
+                padding-top: 3px;
+                font-size: 0.8em;
+              }
+         </style>
+     </head>
+     <body>
+         <div class='wrapper'>
+             <div class='header'>
+                 <p class='title'>{{report_name}} Report</p>
+             </div>
+         <div>
+         <div class='details'>
+           
+                <h3> District: <strong>{{ district }}</strong> </h3>
+                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+
+              <table class="table">
+              <thead>
+                        <th scope="col">Name of GP</th>
+                        <th scope="col">Block Name</th>
+                        <th scope="col">Whether Fiber layed upto GP</th>
+                        <th scope="col">GPON aggregration equipment installed at Block?</th>
+                        <th scope="col">Is GPON termination done at GP?</th>
+                        <th scope="col">NOFN PoP is Build at</th>
+                        <th scope="col">Access to Network Facility extendible upto village?</th>
+                        <th scope="col">Remarks</th>
+                </thead>
+        
+
+                {% for item in filtered_result %}
+                <tr> 
+                        <td >{{ item.gp_name }}</td>
+                        <td>{{ item.block_name }}</td>
+
+                        <td> {{ item.is_fibre_layered_upto_gp }}</td>
+                        <td> {{ item.is_gpon_installed_at_block }}</td>
+                        <td> {{ item.is_gpon_termination_done_at_GP }}</td>
+                        <td> {{ item.nofn_pop_build_at }}</td>
+                        <td> {{ item.is_network_access_available_at_village }}</td>
+                        <td> {{ item.remarks }}</td>
+                </tr>
+                {% endfor %}
+ 
+            </table> 
+         
+         </div>
+     </div> 
+     </body>
+ </html>

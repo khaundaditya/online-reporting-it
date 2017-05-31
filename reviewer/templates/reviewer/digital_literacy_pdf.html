@@ -1,0 +1,87 @@
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+ <html>
+     <head>
+         <title>Title</title>
+         <style type="text/css">
+             body {
+                 font-weight: 200;
+                 font-size: 14px;
+             }
+             .header {
+                 font-size: 20px;
+                 font-weight: 100;
+                 text-align: center;
+                 color: #007cae;
+             }
+             .title {
+                 font-size: 22px;
+                 font-weight: 100;
+                /* text-align: right;*/
+                padding: 10px 20px 0px 20px;  
+             }
+             .title span {
+                 color: #007cae;
+             }
+             .details {
+                 padding: 10px 20px 0px 20px;
+                 text-align: left !important;
+                 /*margin-left: 40%;*/
+             }
+             .hrItem {
+                 border: none;
+                 height: 1px;
+                 /* Set the hr color */
+                 color: #333; /* old IE */
+                 background-color: #fff; /* Modern Browsers */
+             }
+             .table,th,td,tr {
+                border: 1px solid black;
+                background-color:#FCF0FB;
+                text-align: center;
+                padding-top: 3px;
+                font-size: 0.8em;
+              }
+         </style>
+     </head>
+     <body>
+         <div class='wrapper'>
+             <div class='header'>
+                 <p class='title'>{{report_name}} Report</p>
+             </div>
+         <div>
+         <div class='details'>
+           
+                <h3> District: <strong>{{ district }}</strong> </h3>
+                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+
+              <table class="table">
+              <thead>
+                        <th scope="col">Name of LAC</th>
+                        <th scope="col">Number of Training Centres</th>
+                        <th scope="col">No. of Examination Centres near to GP</th>
+                        <th scope="col">Number of beneficiaries Registered</th>
+                        <th scope="col">Number of beneficiaries under training</th>
+                        <th scope="col">Number of beneficiaries trained</th>
+                        <th scope="col">Number of beneficiaries appeared in examination</th>
+                        <th scope="col">Number of beneficiaries passed in examination</th>
+        
+
+                {% for item in filtered_result %}
+                <tr> 
+                        <td >{{ item.lac_name }}</td>
+                        <td>{{ item.num_training_centres }}</td>
+
+                        <td> {{ item.num_examination_centres_near_gp }}</td>
+                        <td> {{ item.num_beneficiaries_registered }}</td>
+                        <td> {{ item.num_beneficiaries_under_training }}</td>
+                        <td> {{ item.num_beneficiaries_trained }}</td>
+                        <td> {{ item.num_beneficiaries_appeared_in_exam }}</td>
+                        <td> {{ item.num_beneficiaries_passed_in_exam }}</td>
+                {% endfor %}
+ 
+            </table> 
+         
+         </div>
+     </div> 
+     </body>
+ </html>
