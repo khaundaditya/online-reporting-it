@@ -55,7 +55,7 @@
         {% endfor %}
 </table>
  <form method="post" action="">
-<a href="{% url 'reviewer:reviewer_comment' %}?report={{report_name}}&today={{YYYYMM}}&district={{district}}">Comment</a>
+<a target="_blank" href="{% url 'messages:messages_compose' %}?recipient={{recipient}} ">Comment</a>
 </form>
 </body>
 </html>

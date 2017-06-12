@@ -65,8 +65,7 @@
 </table>
  <form method="post" action="">
  {% if include_href %}
- <a target="_blank" href="{% url 'reviewer:reviewer_comment' %}?report={{report_name}}&today={{YYYYMM}}&district={{district}}">
- Comment</a> 
+<a target="_blank" href="{% url 'messages:messages_compose' %}?recipient={{recipient}} ">Comment</a>
  {% endif %}
 </form>
 </body>
