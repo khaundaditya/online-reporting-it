@@ -8,10 +8,10 @@ urlpatterns = [
 	url(r'^generate_PDF/$',views.generatePDF,name='generate_pdf'),
 	url(r'^generate_XLS/$',views.generateXLS,name='generate_XLS'),
 	url(r'^generate_XLSX/$',views.generateXLSX,name='generate_XLSX'),
-	url(r'^analyze_report/$',views.analyze_report,name='analyze_report'),
-	url(r'^reviewer_comment/$',views.handleComments,name='reviewer_comment'),
-	url(r'^populate_comment/$',views.populateComment,name='populate_comment'),
-	url(r'^populate_snapshot/$',views.populateSnapshot,name='populate_snapshot'),
+	url(r'^analyze_report/(?P<reportname>\w+)$',views.analyze_report,name='analyze_report'),
+	#url(r'^reviewer_comment/$',views.handleComments,name='reviewer_comment'),
+	#url(r'^populate_comment/$',views.populateComment,name='populate_comment'),
+	#url(r'^populate_snapshot/$',views.populateSnapshot,name='populate_snapshot'),
 
 	#URL Django Messages
 	
