@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Upload From File{% endblock %}
+
+{% block content %}
+<h1>Upload Data From File</h1>
+<form role="form" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table>
+    <tr>
+	        	<td align='right'>District: </td><td>{{form.district}}</td>
+    <tr>
+    <tr>
+	        	<td align='right'>File Type: </td><td>{{form.file_type}}</td>
+    <tr>
+    <tr>
+	        	<td align='right'>Upload File: </td><td>{{form.file}}</td>
+    <tr>
+
+    </table>
+    
+  <button type="submit">Upload Data</button> </td> <button type="reset">Reset</button>
+
+    
+</form>
+{% endblock %}
