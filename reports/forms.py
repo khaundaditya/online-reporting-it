@@ -1,6 +1,5 @@
 from django import forms
 #from parsley.decorators import parsleyfy
-
 from mysite.custom_config import *
 from .models import *
 
@@ -53,8 +52,16 @@ class eDistrictReportForm(forms.ModelForm):
 class UpdateSnapshotForm(forms.Form):
 
 	district = forms.ChoiceField(choices=DISTRICT_CHOICES,label="District")
-	YYYYMM= forms.CharField(required=True,label="Report Month")
+	#YYYYMM= forms.CharField(required=True,label="Report Month")
+	year= forms.ChoiceField(choices=YEAR_CHOICES,label="Year")
+	month= forms.ChoiceField(choices=MONTH_CHOICES,label="Month")
 class DeleteReportForm(forms.Form):
 	district = 	forms.ChoiceField(choices=DISTRICT_CHOICES,label="District")
-	YYYYMM = forms.CharField(required=True,label="YYYYMM")
+	#YYYYMM = forms.CharField(required=True,label="YYYYMM")
+	year= forms.ChoiceField(choices=YEAR_CHOICES,label="Year")
+	month= forms.ChoiceField(choices=MONTH_CHOICES,label="Month")
 	report_name = forms.ChoiceField(choices=REPORT_NAMES,label="Report Name")
+class ImportExcelForm(forms.Form):
+	district = 	forms.ChoiceField(choices=DISTRICT_CHOICES,label="District")
+	file_type = forms.ChoiceField(choices=FILE_UPLOAD_CHOICES,label="FileType")
+	file  = forms.FileField(label= "Choose excel to upload")

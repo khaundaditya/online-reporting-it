@@ -1,4 +1,5 @@
 from .forms import *
+from mysite import custom_config
 MODEL_FORM_BY_MODELNAME  = {
 	
 	'ManpowerReport' : ManpowerReportForm,
@@ -26,3 +27,17 @@ REPORT_TEMPLATES= {
 	'ServiceTrans' : 'reports/edistrict_transaction.html'
 
 }
+def get_verbose_report_month(report_month,flag):
+	outstr = ''
+	if report_month:
+		year = report_month[0:4]
+		month = report_month[4:6]
+		# if flag == 'edit':
+		# 	print custom_config.month_dict
+		# 	v_month = custom_config.month_dict[month]
+		# 	outstr = v_month + ',' + year
+		# elif flag == 'generate':
+		v_month = custom_config.month[month]
+		outstr = v_month + ',' + year
+
+	return outstr

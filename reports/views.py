@@ -26,6 +26,7 @@ from .models import *
 from mysite import custom_config
 from reports import models
 
+
 #from .models import HardwareReport
 # Create your views here.
 district_dict = dict(DISTRICT_CHOICES)
@@ -52,7 +53,9 @@ def edit_report(request,reportname=None):
 		today_date=timestamp.strftime('%Y%m%d')
 		if a_form.is_valid():
 			if 'genvalue' in request.POST:
-				YYYYMM = a_form.cleaned_data['YYYYMM']
+				year = a_form.cleaned_data['year']
+				month = a_form.cleaned_data['month']
+				YYYYMM = year + month
 				district = a_form.cleaned_data['district']
 				district_full_name = district_dict[district]
 				
@@ -87,8 +90,8 @@ def edit_report(request,reportname=None):
 									else:
 										instance.associated_line_department = 'NA'
 							instance.save()
-
-					_updateSnapshot(request.user,report_name,YYYYMM,district)	
+					v_str = get_verbose_report_month(YYYYMM,'edit')
+					_updateSnapshot(request.user,report_name,YYYYMM,district,v_str)	
 					msg = reportname + " Report has been successfully updated"		
 					log_obj = LogActivity(user=request.user,report_name=reportname,district=district_dict[district],
 									submitted_time=timezone.now(),message='Updation of existing Report')
@@ -163,7 +166,8 @@ def generate_report(request,reportname=None):
 						print(msg)
 						messages.error(request, msg)
 						return render(request,'reports/status.html',{'msg':msg,'error':1})
-			_updateSnapshot(request.user,report_name,report_month,com_dist)
+			v_str = get_verbose_report_month(report_month,'generate')
+			_updateSnapshot(request.user,report_name,report_month,com_dist,v_str)
 			msg = reportname + " Report has been successfully submitted"
 
 			log_obj = LogActivity(user=request.user,report_name=reportname,district=district_dict[com_dist],
@@ -187,7 +191,9 @@ def delete_report(request):
 			district = form.cleaned_data['district']
 			district_full_name = district_dict[district]
 			report_name = form.cleaned_data['report_name']
-			YYYYMM = form.cleaned_data['YYYYMM']
+			year = form.cleaned_data['year']
+			month = form.cleaned_data['month']
+			YYYYMM = year+month
 			if report_name == 'DigitalLiteracy':
 				report_name = 'DL'
 			elif report_name == 'eDistrictTrans':
@@ -210,20 +216,92 @@ def delete_report(request):
 	form = DeleteReportForm()
 	context = {'form' : form}
 	return render(request,'reports/delete_report.html',context)
+
+@login_required
+def uploadXL_File_ToDB(request,reportname=None):
+	if request.method == 'POST':
+		form = ImportExcelForm(request.POST,request.FILES)
+		if form.is_valid():
+			
+			district = form.cleaned_data['district']
+			file_type = form.cleaned_data['file_type']
+
+			if file_type == 'XLS' or file_type == 'XLSX':
+				input_file = request.FILES.get('file')
+				import xlrd
+				wb = xlrd.open_workbook(file_contents=input_file.read())
+				wb_sheet = wb.sheet_by_index(0)
+				for rownum in range(1, wb_sheet.nrows):
+					row = wb_sheet.row_values(rownum)
+					if _saveDataToDB(reportname,row)  is False:
+						print ('Row ' + str(row) + ' already exists in database')
+					 
+			elif file_type == 'CSV':
+				import csv
+				input_file = request.FILES.get('file')
+				data =  csv.reader(input_file)
+				row_count = 0
+				for row in data:
+					row_count += 1
+					if row_count == 1: #Ignore Header
+						continue
+					#print row
+					if _saveDataToDB(reportname,row)  is False:
+						print ('Row ' + str(row) + ' already exists in database')
+					
+			return HttpResponse("Data loaded to server")				
+			#return render(request,'reports/upload_status.html',{})
+		else:
+			print form.errors
+	form = ImportExcelForm()
+	return render(request,'reports/upload_data.html',{'form': form})
+
+
  
 """
 Private Helper Routines
 """
+def _saveDataToDB(reportname,district,row):
+	model_dict = {}
+	col_list = _getModelColumns(reportname)
+	col_list.remove('id')
+	flag = True
+	count = 0
+	for col in col_list:
+		#print row[count]
+		today_date = _getTodayDate()
+		report_month = today_date[0:6]
+		user = 'ADC_'+district_dict[district]
+		if col == 'updated_date':
+			model_dict[col] = today_date
+		elif col == 'report_month':
+			model_dict[col] = report_month
+		elif col == 'user_name':
+			model_dict[col] = user
+		elif col == district:
+			model_dict[col] = district
+		else:
+			model_dict[col] = row[count]
+		count = count + 1
+	#print model_dict
+	model = reportname+'Report'
+	model_obj = getattr(models,model)
+	instance = model_obj(**model_dict)
+	try:
+		instance.save()
+	except IntegrityError:
+		flag = False
 
-def _updateSnapshot(user,report_name,YYYYMM,district):
+	return flag
+def _updateSnapshot(user,report_name,YYYYMM,district,verbose_report_month):
 	model_name = report_name + 'Report'
 	model_obj = getattr(models,model_name);
 	reportname = _getCustomReportName(report_name)
 	queryset = model_obj.objects.filter(district=district,report_month=YYYYMM)
-	district_full_name = district_dict[district]
+	district_full_name = district_dict[district ]
 	context = {'filtered_result': queryset,\
 	'report_name': report_name,'district': district,'YYYYMM':YYYYMM,'include_href':1,\
-	'district_full_name':district_full_name,'override' : 1,'recipient':user }
+	'district_full_name':district_full_name,'override' : 1,'recipient':user,'verbose_report_month':verbose_report_month }
 	templ = _getTemplateFile(report_name)
 	content = render_to_string(templ, context)
 	#print (content)
@@ -316,3 +394,16 @@ def _getCustomReportName(reportname):
 		report = reportname
 
 	return report
+def _getModelColumns(report_name):
+	model = report_name+'Report'
+	model_obj = getattr(models,model)
+	col_list = []
+	model_cols_list = list( model_obj._meta.get_fields() )
+	#col_list = [ i for i in model_cols_list if i not in exclude_list ]
+	for field in model_cols_list:
+		s_field = str(field)
+		temp = s_field.split('.')
+		col = temp[2]
+		col_list.append(col)
+	return col_list
+
