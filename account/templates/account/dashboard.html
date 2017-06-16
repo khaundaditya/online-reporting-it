@@ -4,9 +4,7 @@
 {% block content %}
 <h1>Dashboard</h1>
 <p>Welcome to your dashboard.</p>
-<!-- <p>Please check the messages associated with you<p> -->
-<!-- <a target="_blank" href="{% url 'reviewer:populate_comment' %}?status={{status}}&user={{user}}&group={{group}}">Comments </a> -->
-<!-- <a target="_blank" href="{% url 'messages:messages_inbox' %}">Inbox</a> -->
+
 <div class="entry">
 
         {% if group == "Applicant" %}
@@ -56,16 +54,41 @@
 	        	</table>
 	     {% endif %}
 	     {% if group == "Reviewer" %}
-	        <ul>
-	            <li><a href="{% url 'reviewer:generate_report' %}">Generate Report</a></li>
-	             <li><a href="{% url 'reviewer:analyze_report' %}">Analyze Report</a></li>
-	            
-	        </ul>
+	     	<table border="2" cellpadding="0" cellspacing="1">
+	     	<thead>
+	        	<tr>
+	        		<th>Generate Report</th>
+	        		<TH>Analyze Report</TH>
+	        	</tr>
+				 </thead>
+				 <tr>
+				 		<td>
+				        	<ul>
+				            	<li><a href="{% url 'reviewer:generate_report' %}">Generate Report</a></li>
+				             </ul>
+				        </td>
+				        <td>
+				        	<ul>
+
+				             	<li><a href="{% url 'reviewer:analyze_report' reportname='Manpower' %}">Analyze Manpower Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='CSC' %}">Analyze CSC Report</a></li>
+					            <li><a href="{% url 'reviewer:analyze_report' reportname='Hardware' %}">Analyze Hardware Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='Software' %}">Analyze Software Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='NOFN' %}">Analyze NOFN Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='DL' %}">Analyze Digital Literacy Report</a></li>
+					            <li><a href="{% url 'reviewer:analyze_report' reportname='g2cService' %}">Analyze G2C Service Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='ServiceTrans' %}">Analyze e-District Transaction Report</a></li>
+					          	<li><a href="{% url 'reviewer:analyze_report' reportname='SWAN' %}">Analyze SWAN Report</a></li>
+				            
+				        	</ul>
+				        </td>
+				  </tr>
+	        </table>
 	     {% endif %}
 	     {%if group == "Administrators" %}
 	     		<ul>
 	       	     	<li><a href="{% url 'reports:delete_report' %}">Delete Report</a></li>
-
+	       	     	<li><a href="{% url 'reports:read_from_excel' reportname='CSC' %}">Upload CSC Data</a></li>
 	            
 	        	</ul>
 	     {% endif %}
