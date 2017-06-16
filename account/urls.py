@@ -43,13 +43,14 @@ urlpatterns = [
 	# url(r'^edist_transaction/$',generateeDistrictTransactionReport,name='edist_transaction'),
 
 	url(r'^generate_report/$',generateReport,name='generate_report'),
-	url(r'^populate_comment/$',populateComment,name='populate_comment'),
-	url(r'^reviewer_comment/$',handleComments,name='reviewer_comment'),
+	#url(r'^populate_comment/$',populateComment,name='populate_comment'),
+	#url(r'^reviewer_comment/$',handleComments,name='reviewer_comment'),
 	#url(r'^update_manpower_snapshot/$',updateManpowerReport,name='update_manpower_snapshot'),
 	url(r'^edit/(?P<reportname>\w+)/$', edit_report,name='edit_report'),
 	url(r'^generate/(?P<reportname>\w+)/$', generate_report,name='generate_report'),
 	url(r'^delete/$', delete_report,name='delete_report'),
-	url(r'^analyze_report/$',analyze_report,name='analyze_report'),
+	url(r'^analyze_report/(?P<reportname>\w+)/$',analyze_report,name='analyze_report'),
+	url(r'^read_from_excel/(?P<reportname>\w+)/$', uploadXL_File_ToDB,name='read_from_excel'),
 	#Third party
 	url(r'^inbox/$', inbox, name='messages_inbox'),
     url(r'^outbox/$', outbox, name='messages_outbox'),
