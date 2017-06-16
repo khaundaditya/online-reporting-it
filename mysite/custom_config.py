@@ -217,7 +217,7 @@ REPORT_HEADERS = {
 	'DL' : ['Name of LAC','Number of Training Centres','No. of Examination Centres near to GP',
 					'Number of beneficiaries Registered','Number of beneficiaries under training',
 					'Number of beneficiaries trained','Number of beneficiaries appeared in examination','Number of beneficiaries passed in examination'],
-	'CSC' : ['OMT_ID','Name of VLE','Address of Gaon Panchayat','VLE Mobile Num','IT Infrastructure Details','Connectivty Mode','Number of G2C and G2G Services',
+	'CSC' : ['OMT_ID','Name of VLE','Name of Gaon Panchyat','Address of Gaon Panchayat','VLE Mobile Num','IT Infrastructure Details','Connectivty Mode','Number of G2C and G2G Services',
 				'Number of G2B and Other Services','Remarks'],
 	'SWAN' : ['Distance from HQ','Name of Offices Connected','Distance of Office from POP','Type of Horizontal Connectivity'
 				,'Bandwidth','Is Functional?','When it was last up?','Manpower(s) Responsible','Reason(s) of not working','Remarks'],
@@ -233,3 +233,31 @@ REPORT_HEADERS = {
 
 
 }
+ANALYSIS_CHOICES = {
+	
+
+	'ServiceTrans' : ( (1,'Top 10 Services by application numbers'),
+						(2,'Total revenue per district per month and for a period'),(3,'Top 10 Bad performing services by application numbers') ,
+						( 4,'Top 5 Best District in providing e-Services'),(5,' Top 5 worst District in providing e-Services ') ),
+	'CSC' : ( (1,'Top 5 VLE\'s per district'),(2,'Bottom 5 VLE\'s per district') ),
+	'SWAN' : ( (1,'List of Non Functional POPs per district with reason'),(2,'Top 5 district with maximum funcitonal POPs'),
+				(3,'Top 5 district with minimum funcitonal POPs') )
+
+}
+FILE_UPLOAD_CHOICES  = ( ('CSV','CSV'),('XLS','XLS'),('XLSX','XLSX'))
+YEAR_CHOICES  = ( 
+					('2017','2017'),('2018','2018'),('2019','2019'),
+					('2020','2020'),('2021','2021'),('2022','2022'),
+					('2023','2023'),('2024','2024'),('2025','2025'),
+
+				)
+MONTH_CHOICES = (
+
+					('01','Jan'),('02','Feb'),('03','Mar'),('04','Mar'),
+					('05','May'),('06','Jun'),('07','Jul'),('08','Aug'),
+					('09','Sep'),('10','Oct'),('11','Nov'),('12','Dec'),
+				)
+month = dict(MONTH_CHOICES)
+month_dict = {}
+for k,v in month.items():
+	month_dict[v] = k
