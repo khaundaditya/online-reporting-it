@@ -16,6 +16,7 @@ urlpatterns = [
 	#url(r'^update_manpower_snapshot/$',views.updateManpowerReport,name='update_manpower_snapshot'),
 	url(r'^edit/(?P<reportname>\w+)/$', views.edit_report,name='edit_report'),
 	url(r'^generate/(?P<reportname>\w+)/$', views.generate_report,name='generate_report'),
+	url(r'^read_from_excel/(?P<reportname>\w+)/$', views.uploadXL_File_ToDB,name='read_from_excel'),
 	url(r'^delete/$', views.delete_report,name='delete_report'),
 	url(r'^logs/$', views.show_activity_logs,name='logs'),
 	#url(r'^edit_manpower/$',views.edit_manpower,name='edit_manpower'),
