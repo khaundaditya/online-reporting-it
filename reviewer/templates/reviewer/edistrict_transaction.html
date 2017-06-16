@@ -32,10 +32,10 @@
 {% if csrf %}
 {% csrf_token %}
 {% endif %}
-	<h3> District: <strong>{{ district }}</strong> </h3>
-	<h3> Report Month: <strong>{{ YYYYMM }}</strong> </h3>
+	<h3> District: <strong>{{ district_full_name }}</strong> </h3>
+	<h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
     <thead>
-        
+                        <th scope="col">Sl.No</th>
                         <th scope="col">Service Name</th>
                         <th scope="col">Total Number of Transaction</th>
                         <th scope="col">Service Charge(Rs)</th>
@@ -45,6 +45,7 @@
     </thead>
         {% for item in filtered_result %}
         <tr>
+                          <td>{{forloop.counter}}</td>
                          <td >{{ item.service_nm }}</td>
                         <td> {{ item.total_transactions }}</td>
                         <td> {{ item.service_charge }}</td>

@@ -51,11 +51,12 @@
          <div>
          <div class='details'>
            
-                <h3> District: <strong>{{ district }}</strong> </h3>
-                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+                <h3> District: <strong>{{ district_full_name }}</strong> </h3>
+                <h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
 
               <table class="table">
               <thead>
+                    <th>Sl.No</th>
                     <th>Person Name</th>
                     <th>Designation</th>
                     <th>Organization</th>
@@ -67,6 +68,7 @@
 
                 {% for item in filtered_result %}
                 <tr> 
+                     <td>{{forloop.counter}}</td>
                     <td>{{ item.person_name }}</td>
                     <td>{{ item.designation }}</td>
                     <td>{{ item.organization }}</td>

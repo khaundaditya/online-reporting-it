@@ -51,11 +51,12 @@
          <div>
          <div class='details'>
            
-                <h3> District: <strong>{{ district }}</strong> </h3>
-                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+                <h3> District: <strong>{{ district_full_name }}</strong> </h3>
+                <h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
 
               <table class="table">
               <thead>
+                        <th scope="col">Sl.No</th>
                         <th scope="col">Name of Hardware</th>
                         <th scope="col">Quantity/No</th>
                         <th scope="col">Current Status</th>
@@ -67,6 +68,7 @@
 
                 {% for item in filtered_result %}
                 <tr> 
+                             <td>{{forloop.counter}}</td>
                            <td> {{ item.hardware_nm }}</td>
                           <td> {{ item.quantity }}</td>
                           <td> {{ item.status }}</td>

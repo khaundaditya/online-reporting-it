@@ -51,12 +51,13 @@
          <div>
          <div class='details'>
            
-                <h3> District: <strong>{{ district }}</strong> </h3>
-                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+                <h3> District: <strong>{{ district_full_name }}</strong> </h3>
+                <h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
                
               <table class="table">
               <thead>
-                    <th scope="col">OMT ID</th>
+                        <th scope="col">Sl.No</th>
+                        <th scope="col">OMT ID</th>
                         <th scope="col">Name of VLE/CSC </th>
                         <th scope="col">Name of Gaon Panchayat</th>
                         <th scope="col">Address of Gaon Panchayat</th>
@@ -71,6 +72,7 @@
 
                 {% for item in filtered_result %}
                 <tr>
+                    <td>{{forloop.counter}}</td>
                     <td >{{ item.omt_id }}</td>
                     <td>{{ item.vle_name }}</td>
 

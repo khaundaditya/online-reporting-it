@@ -51,12 +51,13 @@
          <div>
          <div class='details'>
            
-                <h3> District: <strong>{{ district }}</strong> </h3>
-                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+                <h3> District: <strong>{{ district_full_name }}</strong> </h3>
+                <h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
 
               <table class="table">
               <thead>
-                    <th scope="col">Application Owner</th>
+                         <th scope="col">Sl.No</th>
+                          <th scope="col">Application Owner</th>
                         <th scope="col">Appication Objective</th>
                         <th scope="col">Stakeholder Details</th>
                         <th scope="col">Date of Installation/Commisioing</th>
@@ -69,6 +70,7 @@
 
                 {% for item in filtered_result %}
                 <tr> 
+                             <td>{{forloop.counter}}</td>
                              <td>{{ item.appl_nm }}</td>
                             <td> {{ item.appl_owner }}</td>
                             <td> {{ item.appl_objective }}</td>

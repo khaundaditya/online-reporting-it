@@ -52,11 +52,12 @@
          <div class='details'>
            
                 <h3> District: <strong>{{ district }}</strong> </h3>
-                <h3> Report Month: <strong>{{ report_month }}</strong> </h3>
+                <h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
 
               <table class="table">
               <thead>
-                     <th scope="col">Name of POPs</th>
+                         <th scope="col">Sl.No</th>
+                         <th scope="col">Name of POPs</th>
                         <th scope="col">Distance from HQ</th>
                         <th scope="col">Name of offices Connected</th>
                         <th scope="col">Distance of Office from POP</th>
@@ -72,6 +73,7 @@
 
                 {% for item in filtered_result %}
                 <tr> 
+                        <td>{{forloop.counter}}</td>
                          <td>{{ item.distance_from_hq }}</td>
 
                         <td> {{ item.offices_connected_with_pop }}</td>

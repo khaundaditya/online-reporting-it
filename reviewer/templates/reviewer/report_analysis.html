@@ -7,12 +7,11 @@
     {% csrf_token %}
         <table>
     <tr>
-    	<td align='right'>Report Name: </td><td>{{form.report_name}}</td>
+    	<td align='right'>Analyis Type: </td><td>{{form.analysis_type}}</td>
     </tr>
 
     </table>
-    {% if show %}
+    <br><br><br>
     <button type="submit">Submit</button>
-    {% endif %}
 </form>
 {% endblock %}

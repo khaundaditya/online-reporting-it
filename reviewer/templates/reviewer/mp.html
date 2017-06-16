@@ -34,8 +34,9 @@
 {% csrf_token %}
 {% endif %}
 	<h3> District: <strong>{{ district_full_name }}</strong> </h3>
-	<h3> Report Month: <strong>{{ YYYYMM }}</strong> </h3>
+	<h3> Report Month: <strong>{{ verbose_report_month }}</strong> </h3>
     <tr>
+        <th>Sl.No</th>
         <th>Person Name</th>
         <th>Designation</th>
         <th>Organization</th>
@@ -45,6 +46,7 @@
     </tr>
     {% for item in filtered_result %}
     <tr> 
+        <td>{{forloop.counter}}</td>
         <td>{{ item.person_name }}</td>
         <td>{{ item.designation }}</td>
         <td>{{ item.organization }}</td>
@@ -57,7 +59,7 @@
  <form method="post" action="">
  {% if include_href %}
  <a target="_blank" href="{% url 'messages:messages_compose' %}?recipient={{recipient}} ">Comment</a>
- Comment</a> 
+
  {% endif %}
 </form>
 </body>

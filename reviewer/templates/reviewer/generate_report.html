@@ -12,10 +12,14 @@
     <tr>
     	<td>Report Name: </td><td>{{form.report_name}}</td>
     </tr>
+    </table>
+    <table>
     <tr>
-    	<td>Report Month: </td><td>{{form.YYYYMM}}</td>
+        <td align='right'>Year: </td><td>{{form.year}}</td><td></td> <td align='right'>Month: </td><td>{{form.month}}</td>
+
     </tr>
     </table>
-    <button type="submit">Submit</button>
+    <br><br>
+    <button type="submit" style="height:20px; width:300px">Submit</button>
 </form>
 {% endblock %}
