@@ -117,7 +117,7 @@ def generateReport(request):
 					timestamp  = timezone.now()
 					today_date=timestamp.strftime('%Y%m%d')
 					#print(filtered_result)
-					verbose_report_month = get_verbose_report_month(YYYYMM)
+					verbose_report_month = _get_verbose_report_month(YYYYMM)
 					context = {'verbose_report_month' : verbose_report_month,'filtered_result':filtered_result,'report_name':report_name,'district_full_name':district_full_name,'YYYYMM':YYYYMM,'today_date':today_date,'district':district,'csrf':1,'include_href':1,'recipient':recipient}
 					templ_name = report_templates[report_name]
 		
@@ -145,7 +145,7 @@ def generatePDF(request):
 	#queryset = _getSpecficModelQuerySet(report_name)
 	model_obj = get_model('reports',model)
 	#filtered_result = _getFilteredResult(queryset,district,report_month)
-	verbose_report_month = get_verbose_report_month(report_month)
+	verbose_report_month = _get_verbose_report_month(report_month)
 	filtered_result =  model_obj.objects.filter(district=district,report_month=report_month)
 	pdf_templ = pdf_templates[report_name]
 	data = { 'verbose_report_month' : verbose_report_month,'report_month':report_month,'report_name': report_name,'district':district_dict[district], 'filtered_result':filtered_result }
