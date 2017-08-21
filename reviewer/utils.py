@@ -13,7 +13,7 @@ def render_to_pdf(template_src, context_dict={}):
 		return HttpResponse(result.getvalue(), content_type='application/pdf')
 	return None
 
-def get_verbose_report_month(report_month):
+def _get_verbose_report_month(report_month):
 	outstr = ''
 	if report_month:
 		year = report_month[0:4]
