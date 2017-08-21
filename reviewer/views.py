@@ -40,7 +40,7 @@ report_templates = { 'Manpower' : 'reviewer/mp.html',
 					 'NOFN' : 'reviewer/nofn.html',
 					 'SWAN' : 'reviewer/swan.html',
 					 'DL' : 'reviewer/digital_literacy.html',
-					 'ServiceTrans' : 'reviewer/edistrict_transactioin.html',
+					 'ServiceTrans' : 'reviewer/edistrict_transaction.html',
 					 'g2cService' : 'reviewer/g2c_service.html'
 					}
 pdf_templates = {
