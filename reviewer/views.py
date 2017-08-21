@@ -323,3 +323,13 @@ def _getCustomReportName(report):
 
 	return report_name
 
+def _get_verbose_report_month(report_month):
+	outstr = ''
+	if report_month:
+		year = report_month[0:4]
+		month = report_month[4:6]
+		v_month = custom_config.month[month]
+		outstr = v_month + ',' + year
+
+
+	return outstr
