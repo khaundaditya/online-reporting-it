@@ -25,6 +25,7 @@ from django.db import connection, transaction
 from django.http import Http404
 from mysite.custom_config import *
 from reviewer.utils import *
+from reports.utils import *
 
 import xlwt
 import openpyxl
